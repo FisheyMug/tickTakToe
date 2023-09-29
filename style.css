@@ -1,0 +1,20 @@
+html {
+    height: 100%;
+    width: 100%;
+}
+
+#gameBoard {
+    background-color: aquamarine;
+    width: 50vw;
+    height:50vh;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.tile {
+    background-color: azure;
+    margin: 8px;
+    width: 25%;
+    height: 25%;
+}
