@@ -22,7 +22,7 @@ const gameBoard = (() => {
         if(e.target.innerHTML) {
             return
         }   else {
-            gameController.placeMark(e.target.getAttribute("data-tile"), currentPlayer.mark, board);
+            gameController.placeMark(e.target.getAttribute("data-tile"), currentPlayer.mark, board, currentPlayer.mark);
             e.target.innerHTML = currentPlayer.mark
             if (currentPlayer == player1) {
                 currentPlayer = player2
@@ -32,7 +32,7 @@ const gameBoard = (() => {
         };
         
     });
-    return {board, currentPlayer}
+    return {board}
 
 })();
 
@@ -50,13 +50,13 @@ const gameController = (() =>{
         [2,4,6]
     ];
 
-    function checkWinner() {
+    function checkWinner(currentPlayerMark) {
         turnsLeft -= 1;
         winConditions.forEach((item, index) =>{
-            if(gameBoard.board[item[0]] === gameBoard.currentPlayer.mark &&
-                gameBoard.board[item[1]] === gameBoard.currentPlayer.mark &&
-                gameBoard.board[item[2]] === gameBoard.currentPlayer.mark) {
-                    console.log(" The winner is Player " + gameBoard.currentPlayer.number);
+            if(gameBoard.board[item[0]] === currentPlayerMark &&
+                gameBoard.board[item[1]] === currentPlayerMark &&
+                gameBoard.board[item[2]] === currentPlayerMark) {
+                    console.log(" The winner is Player " + currentPlayerMark);
                 } else {
                     if (turnsLeft <=0) {
                         console.log("It is a draw, try again!");
@@ -65,9 +65,9 @@ const gameController = (() =>{
         })
     }
 
-    function placeMark(index, mark, array) {
+    function placeMark(index, mark, array, currentPlayerMark) {
         array[index] = mark;
-        checkWinner();
+        checkWinner(currentPlayerMark);
     };
 
     return {placeMark, checkWinner}
