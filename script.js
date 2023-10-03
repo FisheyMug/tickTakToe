@@ -4,10 +4,8 @@ function createPlayer(number, mark) {
 
 const gameBoard = (() => {
     const gameBoard = document.getElementById("gameBoard");
-    const player1 = createPlayer(1, "X");
-    const player2 = createPlayer(2, "O");
 
-    let currentPlayer = player1;
+    const infoScreen = document.getElementById("info");
 
     const board = [" ", " ", " ", " ", " ", " ", " ", " ", " ",]
 
@@ -19,25 +17,37 @@ const gameBoard = (() => {
     };
 
     window.addEventListener("click", function(e){
+        let mark = gameController.updateCurrentPlayerMark();
+        let number = gameController.updateCurrentPlayerNumber();
         if(e.target.innerHTML) {
             return
         }   else {
-            gameController.placeMark(e.target.getAttribute("data-tile"), currentPlayer.mark, board, currentPlayer.mark, currentPlayer.number);
-            e.target.innerHTML = currentPlayer.mark
-            if (currentPlayer == player1) {
-                currentPlayer = player2
-            } else if (currentPlayer == player2) {
-                currentPlayer = player1
-            };
+            gameController.placeMark(e.target.getAttribute("data-tile"), mark, board, mark, number);
+            e.target.innerHTML = mark
         };
         
     });
-    return {board}
+
+    function updateInfo(info) {
+        infoScreen.innerHTML=(info)
+    }
+    return {board, updateInfo}
 
 })();
 
 const gameController = (() =>{
     let turnsLeft = 9;
+    const player1 = createPlayer(1, "X");
+    const player2 = createPlayer(2, "O");
+    let currentPlayer = player1;
+
+    function updateCurrentPlayerMark() {
+        return currentPlayer.mark
+    }
+
+    function updateCurrentPlayerNumber() {
+        return currentPlayer.number
+    }
 
     const winConditions = [
         [0,1,2], //horizontal
@@ -57,12 +67,23 @@ const gameController = (() =>{
                 gameBoard.board[item[1]] === currentPlayerMark &&
                 gameBoard.board[item[2]] === currentPlayerMark) {
                     console.log("Congratulations! The winner is Player " + currentPlayerNumber);
-                } else {
-                    if (turnsLeft <=0) {
-                        console.log("It is a draw, try again!");
-                    }
-                }
+                    gameBoard.updateInfo("Congratulations! The winner is Player " + currentPlayerNumber)
+                } 
+
         })
+        if (turnsLeft <=0) {
+            console.log("It is a draw, try again!");
+            gameBoard.updateInfo("It is a draw, try again!")
+        }
+        else if (turnsLeft > 0) {
+            if (currentPlayer == player1) {
+                currentPlayer = player2
+               // console.log(currentPlayer)
+            } else if (currentPlayer == player2) {
+                currentPlayer = player1
+                //console.log(currentPlayer)
+            };
+        }
     }
 
     function placeMark(index, mark, array, currentPlayerMark, currentPlayerNumber) {
@@ -70,5 +91,5 @@ const gameController = (() =>{
         checkWinner(currentPlayerMark, currentPlayerNumber);
     };
 
-    return {placeMark, checkWinner}
+    return {placeMark, checkWinner, updateCurrentPlayerMark, updateCurrentPlayerNumber}
 })();
