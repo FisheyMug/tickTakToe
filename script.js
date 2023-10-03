@@ -23,6 +23,7 @@ const gameBoard = (() => {
             return
         }   else {
             gameController.placeMark(e.target.getAttribute("data-tile"), mark, board, mark, number);
+            e.target.classList.add(mark)
             e.target.innerHTML = mark
         };
         

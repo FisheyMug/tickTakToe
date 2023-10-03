@@ -29,4 +29,23 @@ header {
     margin: 8px;
     width: 25%;
     height: 25%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: 900;
+    font-size: 4em;
+}
+
+.X {
+    color: red;
+}
+
+.O {
+    color: blue;
+}
+
+#menu {
+    display: flex;
+    justify-content: center;
+    margin-top: 70vh;
 }
