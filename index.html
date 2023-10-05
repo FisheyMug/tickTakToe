@@ -9,6 +9,15 @@
 </head>
 <body>
     <header><h1>Tick-Tak-Toe!</h1></header>
+    <div id="playerSelection">
+        <label for="player">Play against Human or Computer?</label>
+        <select id="player" name="player">
+            <option value="human">Human</option>
+            <option value="computer">Computer</option>
+        </select>
+        <button id="select">Select</button>
+    </div>
+
     <div><h3  id="info">Player 1 = X  :  Player 2 = O</h3></div>
     <div id="gameBoard"></div>
     <div id="menu"><button id="reset" onClick="window.location.reload();">Reset</button></div>
